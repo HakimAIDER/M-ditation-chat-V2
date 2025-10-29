@@ -28,4 +28,5 @@ export interface UseAudioPlayerReturn {
   togglePlayPause: () => void;
   isLoading: boolean;
   error: string | null;
+  isFinished: boolean;
 }

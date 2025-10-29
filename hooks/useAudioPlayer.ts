@@ -9,6 +9,7 @@ export const useAudioPlayer = (base64AudioData: string, playbackRate: number): U
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFinished, setIsFinished] = useState<boolean>(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioBufferRef = useRef<AudioBuffer | null>(null);
   const sourceNodeRef = useRef<AudioBufferSourceNode | null>(null);
@@ -18,6 +19,7 @@ export const useAudioPlayer = (base64AudioData: string, playbackRate: number): U
       try {
         setIsLoading(true);
         setError(null);
+        setIsFinished(false);
         if (!audioContextRef.current) {
           audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({
             sampleRate: SAMPLE_RATE
@@ -68,6 +70,7 @@ export const useAudioPlayer = (base64AudioData: string, playbackRate: number): U
       audioContextRef.current.resume();
     }
     
+    setIsFinished(false);
     const source = audioContextRef.current.createBufferSource();
     source.buffer = audioBufferRef.current;
     source.playbackRate.value = playbackRate;
@@ -75,6 +78,7 @@ export const useAudioPlayer = (base64AudioData: string, playbackRate: number): U
     source.start();
     source.onended = () => {
       setIsPlaying(false);
+      setIsFinished(true);
       sourceNodeRef.current = null;
     };
 
@@ -101,5 +105,5 @@ export const useAudioPlayer = (base64AudioData: string, playbackRate: number): U
     }
   }, [isLoading, isPlaying, pause, play, error]);
 
-  return { isPlaying, togglePlayPause, isLoading, error };
+  return { isPlaying, togglePlayPause, isLoading, error, isFinished };
 };

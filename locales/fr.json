@@ -15,6 +15,8 @@
   "player.audioErrorTitle": "Erreur audio",
   "player.audioErrorBody": "L'audio de cette session n'a pas pu être chargé. Veuillez essayer d'en générer une nouvelle.",
   "player.speedLabel": "Vitesse de lecture",
+  "player.feedback.prompt": "Comment était cette session ?",
+  "player.feedback.thanks": "Merci pour votre retour !",
   "player.status.playbackUnavailable": "Lecture indisponible",
   "player.status.preparingAudio": "Préparation de l'audio...",
   "player.status.playing": "En lecture",
